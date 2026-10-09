@@ -8,3 +8,5 @@
 
 ## Как запустить
 `mvn compile exec:java` или через IDE — класс `ru.stepup.payments.Main`.
+
+`сборка — через IDE`

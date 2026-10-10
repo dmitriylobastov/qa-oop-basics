@@ -38,7 +38,7 @@ public class Main {
         int countTests = 0;
         for (TestCase tc : tests) {
             System.out.println(tc);
-            countTests += tc.getStep().size();
+            countTests += tc.getSteps().size();
         }
         System.out.println("Количество тест-кейсов - " + tests.size());
         System.out.println("Сумма шагов по всем тест-кейсам - " + countTests);

@@ -14,9 +14,8 @@ public class Main {
         System.out.println(card);
 
         BonusCard bonus = new BonusCard("Вася", "2234567890123456");
-        processPayment(bonus);
         bonus.addBonus(50);
+        processPayment(bonus);
         System.out.println(bonus);
-
     }
 }

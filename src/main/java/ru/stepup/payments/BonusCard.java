@@ -24,7 +24,7 @@ public class BonusCard extends PaymentCard {
         return "BonusCard{" +
                 "ownerName='" + ownerName + '\'' +
                 ", cardNumber='" + cardNumber + '\'' +
-                ", bonusPoint='" + bonusPoint + '\'' +
+                ", bonusPoint=" + bonusPoint +
                 '}';
     }
 }

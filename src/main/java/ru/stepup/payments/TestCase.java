@@ -5,7 +5,7 @@ import java.util.List;
 
 public class TestCase {
     private final String title;
-    private final List<String> steps;
+    private final List<String> step;
     private String status;
 
     public TestCase(String title) {
@@ -13,23 +13,23 @@ public class TestCase {
             throw new IllegalArgumentException("Имя тест-кейса не может быть пустым");
         }
         this.title = title;
-        this.steps = new ArrayList<>();
+        this.step = new ArrayList<>();
         this.status = "DRAFT";
     }
 
-    public void addSteps(String steps) {
+    public void addStep(String steps) {
         if (steps == null || steps.isBlank()) {
             throw new IllegalArgumentException("Шаг не может быть пустым");
         }
-        this.steps.add(steps);
+        this.step.add(steps);
     }
 
-    public List<String> getSteps() {
-        return new ArrayList<>(steps);
+    public List<String> getStep() {
+        return new ArrayList<>(step);
     }
 
     public void markAsPassed() {
-        if (steps.isEmpty()) {
+        if (step.isEmpty()) {
             throw new IllegalStateException("Тест не может быть отмечен пройденным без шагов");
         }
         this.status = "PASSED";
@@ -47,7 +47,7 @@ public class TestCase {
     public String toString() {
         return "TestCase{" +
                 "title='" + title + '\'' +
-                ", steps=" + steps +
+                ", steps=" + step +
                 ", status='" + status + '\'' +
                 '}';
     }

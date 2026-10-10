@@ -1,6 +1,6 @@
 package ru.stepup.payments;
 
-public class PaymentMethod {
+public class PaymentMethod implements Payable {
 
     protected String ownerName;
 
@@ -14,7 +14,7 @@ public class PaymentMethod {
     public String getOwnerName() {
         return ownerName;
     }
-
+    @Override
     public void pay(double amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("Сумма платежа должна быть больше нуля");
@@ -22,6 +22,7 @@ public class PaymentMethod {
         System.out.println("Платеж на сумму " + amount + " через " + getType());
     }
 
+    @Override
     public String getType() {
         return "PaymentMethod";
     }

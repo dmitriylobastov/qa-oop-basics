@@ -1,42 +1,54 @@
 package ru.stepup.payments;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TestCase {
-    private String title;          // private = снаружи не видно
-    private String status;         // статус меняем только через метод
-    private int stepsCount;        // шаги только добавляем, не присваиваем вручную
+    private final String title;
+    private final List<String> steps;
+    private String status;
 
     public TestCase(String title) {
-        setTitle(title);           // конструктор тоже идёт через валидацию
-        this.status = "DRAFT";     // новый тест-кейс всегда черновик
-    }
-
-    public void setTitle(String title) {
         if (title == null || title.isBlank()) {
-            throw new IllegalArgumentException("Название тест-кейса не может быть пустым");
+            throw new IllegalArgumentException("Имя тест-кейса не может быть пустым");
         }
         this.title = title;
+        this.steps = new ArrayList<>();
+        this.status = "DRAFT";
     }
 
-    public String getTitle() {
-        return title;
+    public void addSteps(String steps) {
+        if (steps == null || steps.isBlank()) {
+            throw new IllegalArgumentException("Шаг не может быть пустым");
+        }
+        this.steps.add(steps);
     }
 
-    public void addStep() {
-        this.stepsCount++;         // снаружи нельзя поставить -5, только +1
-    }
-
-    public int getStepsCount() {
-        return stepsCount;
+    public List<String> getSteps() {
+        return new ArrayList<>(steps);
     }
 
     public void markAsPassed() {
-        if (stepsCount == 0) {
-            throw new IllegalStateException("Нельзя завершить тест без шагов");
+        if (steps.isEmpty()) {
+            throw new IllegalStateException("Тест не может быть отмечен пройденным без шагов");
         }
         this.status = "PASSED";
     }
 
     public String getStatus() {
         return status;
+    }
+
+    public String getTitle(){
+        return title;
+    }
+
+    @Override
+    public String toString() {
+        return "TestCase{" +
+                "title='" + title + '\'' +
+                ", steps=" + steps +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

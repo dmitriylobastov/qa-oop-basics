@@ -1,6 +1,7 @@
 package ru.stepup.payments;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
@@ -35,13 +36,36 @@ public class Main {
             }
         }
 
-        int countTests = 0;
         for (TestCase tc : tests) {
             System.out.println(tc);
-            countTests += tc.getSteps().size();
         }
-        System.out.println("Количество тест-кейсов - " + tests.size());
-        System.out.println("Сумма шагов по всем тест-кейсам - " + countTests);
 
+        System.out.println("Количество тест-кейсов - " + tests.size());
+
+        int countTests = tests.stream()
+                .mapToInt(tc -> tc.getSteps().size())
+                .sum();
+        System.out.println("Сумма шагов по всем тест-кейсам: " + countTests);
+
+        int countPassedCase = (int) tests.stream()
+                .filter(tc -> tc.getStatus().equals("PASSED"))
+                .count();
+        System.out.println("Количество успешных тест-кейсов: " + countPassedCase);
+
+        List<String>titleTestCase = tests.stream()
+                        .map(TestCase::getTitle).collect(Collectors.toList());
+        System.out.println("Заголовки тест-кейсов: " + titleTestCase);
+
+        boolean hasNotSteps = tests.stream()
+                        .anyMatch(tc -> tc.getSteps().isEmpty());
+        System.out.println("Есть тест-кейс без шагов - " + hasNotSteps);
+
+        boolean allHaveSteps = tests.stream()
+                .allMatch(tc -> !tc.getSteps().isEmpty());
+        System.out.println("У всех тест-кейсов есть шаги - " + allHaveSteps);
+
+        boolean noneWithoutSteps = tests.stream()
+                .noneMatch(tc -> tc.getSteps().isEmpty());
+        System.out.println("Ни одного тест-кейса без шагов - " + noneWithoutSteps);
     }
 }

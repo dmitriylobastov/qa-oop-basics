@@ -17,11 +17,11 @@ public class TestCase {
         this.status = "DRAFT";
     }
 
-    public void addStep(String steps) {
-        if (steps == null || steps.isBlank()) {
+    public void addStep(String step) {
+        if (step == null || step.isBlank()) {
             throw new IllegalArgumentException("Шаг не может быть пустым");
         }
-        this.steps.add(steps);
+        this.steps.add(step);
     }
 
     public List<String> getSteps() {

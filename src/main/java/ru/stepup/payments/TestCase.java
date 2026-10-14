@@ -17,6 +17,7 @@ public class TestCase {
         this.status = "DRAFT";
     }
 
+
     public void addStep(String step) {
         if (step == null || step.isBlank()) {
             throw new IllegalArgumentException("Шаг не может быть пустым");

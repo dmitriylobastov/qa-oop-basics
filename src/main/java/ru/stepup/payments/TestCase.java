@@ -40,7 +40,7 @@ public class TestCase {
         return status;
     }
 
-    public String getTitle(){
+    public String getTitle() {
         return title;
     }
 

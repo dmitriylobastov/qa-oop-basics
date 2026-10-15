@@ -3,7 +3,8 @@ package ru.stepup.payments;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PaymentCardTest {
     private PaymentCard card;
@@ -15,55 +16,70 @@ public class PaymentCardTest {
 
     @Test
     void shouldCreateCardWithZeroBalance() {
-        assertEquals(0, card.getBalance());
+        assertThat(card.getBalance())
+                .isZero();
     }
 
     @Test
     void shouldTopUpBalance() {
         card.topUp(1000);
-        assertEquals(1000, card.getBalance());
+        assertThat(card.getBalance())
+                .isEqualTo(1000);
     }
 
     @Test
     void shouldWithdrawFromBalance() {
         card.topUp(1000);
         card.withdraw(300);
-        assertEquals(700, card.getBalance());
+        assertThat(card.getBalance())
+                .isEqualTo(700);
     }
 
     @Test
     void shouldAddUpMultipleTopUps() {
         card.topUp(100);
         card.topUp(200);
-        assertEquals(300, card.getBalance());
+        assertThat(card.getBalance())
+                .isEqualTo(300);
     }
 
     @Test
     void shouldThrowWhenTopUpNegative() {
-        assertThrows(IllegalArgumentException.class, () -> card.topUp(-100));
+        assertThatThrownBy(() -> card.topUp(-100))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Сумма пополнения должна быть больше нуля");
     }
 
     @Test
     void shouldThrowWhenTopUpZero() {
-        assertThrows(IllegalArgumentException.class, () -> card.topUp(0));
+        assertThatThrownBy(() -> card.topUp(0))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Сумма пополнения должна быть больше нуля");
     }
 
     @Test
     void shouldThrowWhenWithdrawMoreThanBalance() {
         card.topUp(500);
-        assertThrows(IllegalArgumentException.class, () -> card.withdraw(1000));
+        assertThatThrownBy(() -> card.withdraw(1000))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Сумма списания больше баланса");
     }
 
     @Test
     void shouldThrowWhenCreateCardWithInvalidNumber() {
-        assertThrows(IllegalArgumentException.class, () -> new PaymentCard("123", "IVAN"));
+        assertThatThrownBy(() -> new PaymentCard("123", "IVAN"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Номер карты должен содержать 16 цифр");
     }
 
     @Test
     void shouldKeepBalanceAfterFailedWithdraw() {
         card.topUp(500);
-        assertThrows(IllegalArgumentException.class, () -> card.withdraw(1000));
-        assertEquals(500, card.getBalance());
+        assertThatThrownBy(() -> card.withdraw(1000))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Сумма списания больше баланса");
+        assertThat(card.getBalance()).isEqualTo(500);
     }
+
 
 }
